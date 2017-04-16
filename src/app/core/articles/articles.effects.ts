@@ -26,8 +26,6 @@ export class ArticlesEffects {
     .map((action) => action.payload)
     .switchMap((payload) => this.articlesRequestService.getArticles()
 
-      .map((res) => { console.log(res, 'effect rest'); return res; })
-
       // If successful, dispatch success action with result
       .mergeMap((res: EntityCollection<Article>) => Observable.of(
         this.articlesActions.getArticlesSuccess(res)

@@ -126,18 +126,18 @@ export class ServerRequesterBaseService {
         };
       }
 
-      console.log(body, 'body');
+//      console.log(body, 'body');
 
       // Convert all items of collection in Entities
       let rawCollection = map(body) || [];
 
-      console.log(rawCollection, 'rawCollection');
+//      console.log(rawCollection, 'rawCollection');
 
       let collection = new Map();
 
       for (let item of rawCollection) {
 
-        console.log(item, 'item');
+//        console.log(item, 'item');
 
         collection.set(item.id, {
           data: item,
@@ -145,7 +145,7 @@ export class ServerRequesterBaseService {
         });
       }
 
-      console.log(collection, 'collection');
+//      console.log(collection, 'collection');
 
       // Build the collection object
       return {

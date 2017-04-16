@@ -30,9 +30,8 @@ export class ArticlesRequestService extends ServerRequesterBaseService {
    * @returns {Observable<EntityCollection<Article>>}
    */
   public getArticles(): Observable<EntityCollection<Article>> {
-    return this.http.get(`${API_BASE_URL}/v1/users`)
-      .map(this.extractEntityCollection((data) => data._embedded.articles))
-      .map((data) => { console.log(data, 'dt'); return data; })
+    return this.http.get(`${API_BASE_URL}/v2/posts`)
+      .map(this.extractEntityCollection())
       .catch(this.handleEntityCollectionError);
   }
 
@@ -42,7 +41,7 @@ export class ArticlesRequestService extends ServerRequesterBaseService {
    * @param articleId
    */
   public getArticle(articleId: number): Observable<Entity<Article>> {
-    return this.http.get(`${API_BASE_URL}/v1/users/${articleId}`)
+    return this.http.get(`${API_BASE_URL}/v2/posts/${articleId}`)
       .map(this.extractEntity())
       .catch(this.handleEntityError);
   }
@@ -67,7 +66,6 @@ export class ArticlesService {
    * @returns {Observable<EntityCollection<Article>>}
    */
   public onArticlesChange(): Observable<EntityCollection<Article>> {
-    // console.log(this.store.select(state => { return state.articles.articles }));
     return this.store.select((state) => { return state.articles; });
   }
 
@@ -77,32 +75,10 @@ export class ArticlesService {
    * @param article article to observe
    * @returns {Observable<Entity<Article>>} event when observed article is changed
    */
-  public onArticleChange(article: Entity<Article>): Observable<Entity<Article>> {
+  public onArticleChange(articleId: number): Observable<Entity<Article>> {
     return this.store
       // select all entities of collection "articles"
-      .select((state) => { return state.articles.collection.get(article.data.id); })
-/*
-      // each time the collection is changed, extract article having the same id as observed article
-      .map((collection) => {
-
-        console.log('in map');
-
-        for (let item of collection) {
-
-          console.log(item, 'item');
-          console.log(article, 'article');
-
-
-          if (article && item.data.id === article.data.id) {
-            return item;
-          }
-        }
-
-        return null;
-      })
-
-      // each time we have an article extracted, only trigger event if data of the article has changed.
-      .filter((item) => { return item && item !== article; })*/ ;
+      .select((state) => { return state.articles.collection.get(articleId) || { data: null, loadState: null }; });
   }
 
 
@@ -115,10 +91,10 @@ export class ArticlesService {
 
   /**
    * Get one article
-   * @param article
+   * @param articleId
    */
-  public getArticle(article): void {
-    this.store.dispatch(this.articlesActions.getArticle(article.id));
+  public getArticle(articleId: number): void {
+    this.store.dispatch(this.articlesActions.getArticle(articleId));
   }
 
 }

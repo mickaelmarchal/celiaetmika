@@ -42,7 +42,7 @@ export function articlesReducer(state = initialState, action: Action): EntityCol
 
       // set the retrieved article in the collection
       let newState = Object.assign({}, state);
-      newState.collection.set(action.payload.data.id, {
+      newState.collection.set(action.payload, {
         data: null,
         loadState: false,
         error: null
@@ -56,6 +56,9 @@ export function articlesReducer(state = initialState, action: Action): EntityCol
 
       // set the retrieved article (in error) in the collection
       let newState = Object.assign({}, state);
+
+      // TODO ici data.id c'est null. Il faudrait récupérer l'id demandé par le composant,
+      // donc passer ler articleId dans la payload depuis GET_ARTICLE
       newState.collection.set(action.payload.data.id, action.payload);
 
       return newState;

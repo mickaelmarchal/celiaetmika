@@ -12,7 +12,7 @@ import { ArticleComponent } from './article/article.component';
       component: HomeComponent,
     },
     {
-      path: 'articles/:article',
+      path: 'articles/:articleId/:articleSlug',
       component: ArticleComponent,
     }
   ])],

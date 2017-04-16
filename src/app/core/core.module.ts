@@ -13,6 +13,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { rootReducer } from './reducers';
 
 import './rxjs.imports';
+import { environment } from '../../environments/environment';
 
 // import { UsersActions } from './users/users.actions';
 // import { UsersEffects } from './users/users.effects';
@@ -24,12 +25,12 @@ import { ArticlesService, ArticlesRequestService } from './articles/articles.ser
 
 
 // import StoreDevTools (Redux dev tools) if dev mode
-/*const STORE_DEV_TOOLS_IMPORTS = [];
-if (environment.production) {
+const STORE_DEV_TOOLS_IMPORTS = [];
+if (! environment.production) {
   STORE_DEV_TOOLS_IMPORTS.push(...[
     StoreDevtoolsModule.instrumentOnlyWithExtension()
   ]);
-}*/
+}
 
 
 @NgModule({
@@ -47,7 +48,7 @@ if (environment.production) {
     RouterStoreModule.connectRouter(),
     StoreModule.provideStore(rootReducer),
 
-    // STORE_DEV_TOOLS_IMPORTS
+    STORE_DEV_TOOLS_IMPORTS
   ],
   declarations: [],
   providers: [

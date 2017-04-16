@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
+
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -11,10 +13,11 @@ import { Page404Component } from './general/page404/page404.component';
   declarations: [
     AppComponent,
     LayoutComponent,
-    Page404Component
+    Page404Component,
   ],
   imports: [
     CoreModule.forRoot(),
+    SharedModule,
 
     AppRoutingModule
   ],
